@@ -6,7 +6,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "./ui/chart";
+} from "../ui/chart";
 import { TrendingUp } from "lucide-react";
 import type { PatientsPerDoctor } from "@/types";
 
@@ -49,7 +49,7 @@ const AppPieChart = ({
           label: item.doctor,
           color: chartColors[index % chartColors.length],
         },
-      ])
+      ]),
     ),
   } satisfies ChartConfig;
 
@@ -61,9 +61,13 @@ const AppPieChart = ({
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Loading chart...</p>
       ) : isError ? (
-        <p className="text-sm text-muted-foreground">Failed to load chart data.</p>
+        <p className="text-sm text-muted-foreground">
+          Failed to load chart data.
+        </p>
       ) : chartData.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No doctor patient data yet.</p>
+        <p className="text-sm text-muted-foreground">
+          No doctor patient data yet.
+        </p>
       ) : (
         <>
           <ChartContainer

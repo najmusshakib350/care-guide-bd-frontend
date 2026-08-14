@@ -17,61 +17,75 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { useCreateDoctorMutation } from "@/redux/api/doctorApi";
-import { useState } from "react";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { useUpdatePatientMutation } from "@/redux/api/patientApi";
+import type { Patient } from "@/types";
 import { getApiErrorMessage } from "@/utils/error";
+import { toDateInputValue } from "@/utils/patient";
 
 const formSchema = z.object({
   name: z
     .string()
-    .min(2, { message: "Doctor name must be at least 2 characters!" })
-    .max(50),
-  email: z.string().email({ message: "Invalid email address!" }),
-  phone: z.string().min(7, { message: "Phone must be at least 7 characters!" }),
-  specialization: z
+    .min(2, { message: "Patient name must be at least 2 characters!" }),
+  age: z.coerce.number().int().min(0, { message: "Age cannot be negative" }),
+  condition: z
     .string()
-    .min(2, { message: "Specialization must be at least 2 characters!" }),
-  hospital: z
-    .string()
-    .min(2, { message: "Hospital must be at least 2 characters!" }),
+    .min(2, { message: "Condition must be at least 2 characters!" }),
+  date: z.string().min(1, { message: "Date is required" }),
 });
 
-const AddDoctor = () => {
-  const [createDoctor, { isLoading }] = useCreateDoctorMutation();
+type EditPatientProps = {
+  patient: Patient;
+  onUpdated?: () => void;
+};
+
+const EditPatient = ({ patient, onUpdated }: EditPatientProps) => {
+  const [updatePatient, { isLoading }] = useUpdatePatientMutation();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      specialization: "",
-      hospital: "",
+      name: patient.name,
+      age: patient.age,
+      condition: patient.condition,
+      date: toDateInputValue(patient.date),
     },
   });
+
+  useEffect(() => {
+    form.reset({
+      name: patient.name,
+      age: patient.age,
+      condition: patient.condition,
+      date: toDateInputValue(patient.date),
+    });
+  }, [patient, form]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setError(null);
     setSuccess(null);
 
     try {
-      await createDoctor(values).unwrap();
-      setSuccess("Doctor created successfully.");
-      form.reset();
+      await updatePatient({
+        patientId: patient._id,
+        body: values,
+      }).unwrap();
+      setSuccess("Patient updated successfully.");
+      onUpdated?.();
     } catch (err) {
-      setError(getApiErrorMessage(err, "Failed to create doctor"));
+      setError(getApiErrorMessage(err, "Failed to update patient"));
     }
   };
 
   return (
     <SheetContent>
       <SheetHeader>
-        <SheetTitle className="mb-4">Add Doctor</SheetTitle>
+        <SheetTitle className="mb-4">Edit Patient</SheetTitle>
         <SheetDescription asChild>
           <Form {...form}>
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
@@ -80,73 +94,53 @@ const AddDoctor = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>Enter doctor full name.</FormDescription>
+                    <FormDescription>Enter patient name.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="email"
+                name="age"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Age</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input type="number" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Only admin can see your email.
-                    </FormDescription>
+                    <FormDescription>Enter patient age.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="phone"
+                name="condition"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel>Condition</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Only admin can see your phone number
-                    </FormDescription>
+                    <FormDescription>Enter patient condition.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="specialization"
+                name="date"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Specialization</FormLabel>
+                    <FormLabel>Registration Date</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input type="date" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Enter doctor specialization
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="hospital"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Hospital</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription>Enter hospital name</FormDescription>
+                    <FormDescription>Enter registration date.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -154,7 +148,7 @@ const AddDoctor = () => {
               {error && <p className="text-sm text-red-500">{error}</p>}
               {success && <p className="text-sm text-green-600">{success}</p>}
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Submitting..." : "Submit"}
+                {isLoading ? "Saving..." : "Save Changes"}
               </Button>
             </form>
           </Form>
@@ -164,4 +158,4 @@ const AddDoctor = () => {
   );
 };
 
-export default AddDoctor;
+export default EditPatient;

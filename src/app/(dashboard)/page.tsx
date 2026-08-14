@@ -1,9 +1,9 @@
 "use client";
 
-import AppAreaChart from "@/components/AppAreaChart";
-import AppBarChart from "@/components/AppBarChart";
-import AppPieChart from "@/components/AppPieChart";
-import CardList from "@/components/CardList";
+import AppAreaChart from "@/components/charts/AppAreaChart";
+import AppBarChart from "@/components/charts/AppBarChart";
+import AppPieChart from "@/components/charts/AppPieChart";
+import CardList from "@/components/charts/CardList";
 import { useGetDashboardStatsQuery } from "@/redux/api/statsApi";
 
 const Homepage = () => {

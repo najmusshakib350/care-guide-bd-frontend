@@ -20,7 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-} from "./ui/sidebar";
+} from "../ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -28,10 +28,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Sheet, SheetTrigger } from "./ui/sheet";
-import AddDoctor from "./AddDoctor";
-import AddPatient from "./AddPatient";
+} from "../ui/dropdown-menu";
+import { Sheet, SheetTrigger } from "../ui/sheet";
+import AddDoctor from "../forms/AddDoctor";
+import AddPatient from "../forms/AddPatient";
 import { signOut, useSession } from "next-auth/react";
 
 const navItems = [

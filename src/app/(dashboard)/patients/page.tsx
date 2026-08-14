@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { createPatientColumns } from "./columns";
-import { DataTable } from "@/components/DataTable";
+import { DataTable } from "@/components/tables/DataTable";
 import { Input } from "@/components/ui/input";
 import {
   useDeletePatientMutation,
@@ -11,8 +11,8 @@ import {
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import AddPatient from "@/components/AddPatient";
-import EditPatient from "@/components/EditPatient";
+import AddPatient from "@/components/forms/AddPatient";
+import EditPatient from "@/components/forms/EditPatient";
 import type { Patient } from "@/types";
 
 const PatientsPage = () => {
@@ -31,7 +31,7 @@ const PatientsPage = () => {
       page,
       limit,
     }),
-    [search, condition, date, page, limit]
+    [search, condition, date, page, limit],
   );
 
   const { data, isFetching, isError } = useGetPatientsQuery(queryArgs);
@@ -45,7 +45,7 @@ const PatientsPage = () => {
 
   const handleBulkDelete = async (rows: Patient[]) => {
     const confirmed = window.confirm(
-      `Delete ${rows.length} selected patient(s)?`
+      `Delete ${rows.length} selected patient(s)?`,
     );
     if (!confirmed) return;
     await Promise.all(rows.map((row) => deletePatient(row._id)));
@@ -58,7 +58,7 @@ const PatientsPage = () => {
         onDelete: handleDelete,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   return (

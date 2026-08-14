@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
-import { Badge } from "./ui/badge";
+import { Card, CardContent, CardFooter, CardTitle } from "../ui/card";
+import { Badge } from "../ui/badge";
 import type { DashboardStats, PatientsPerDoctor } from "@/types";
 
 type CardListProps = {
@@ -53,7 +53,9 @@ const CardList = ({
                   </CardTitle>
                   <Badge variant="secondary">Overview</Badge>
                 </CardContent>
-                <CardFooter className="p-0">{overview.totalPatients}</CardFooter>
+                <CardFooter className="p-0">
+                  {overview.totalPatients}
+                </CardFooter>
               </Card>
             </>
           )}
@@ -68,7 +70,7 @@ const CardList = ({
                   <div className="w-12 h-12 rounded-sm relative overflow-hidden">
                     <Image
                       src={`https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(
-                        item.doctorName || "Doctor"
+                        item.doctorName || "Doctor",
                       )}`}
                       alt={item.doctorName || "Doctor"}
                       fill
@@ -90,7 +92,9 @@ const CardList = ({
                 </Card>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground">No doctor data yet.</p>
+              <p className="text-sm text-muted-foreground">
+                No doctor data yet.
+              </p>
             ))}
 
           {!isTopDoctors && !overview && (

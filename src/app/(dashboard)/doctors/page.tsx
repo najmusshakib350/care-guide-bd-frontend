@@ -2,13 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { doctorColumns } from "./columns";
-import { DataTable } from "@/components/DataTable";
+import { DataTable } from "@/components/tables/DataTable";
 import { Input } from "@/components/ui/input";
 import { useGetDoctorsQuery } from "@/redux/api/doctorApi";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import AddDoctor from "@/components/AddDoctor";
+import AddDoctor from "@/components/forms/AddDoctor";
 
 const DoctorsPage = () => {
   const [search, setSearch] = useState("");
@@ -23,7 +23,7 @@ const DoctorsPage = () => {
       page,
       limit,
     }),
-    [search, hospital, page, limit]
+    [search, hospital, page, limit],
   );
 
   const { data, isFetching, isError } = useGetDoctorsQuery(queryArgs);

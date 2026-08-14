@@ -1,6 +1,6 @@
-import AppSidebar from "@/components/AppSidebar";
+import AppSidebar from "@/components/layout/AppSidebar";
 import DashboardAlertProvider from "@/components/DashboardAlertProvider";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/layout/Navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

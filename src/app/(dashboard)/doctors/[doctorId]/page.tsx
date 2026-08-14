@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { createDoctorPatientColumns } from "./columns";
-import { DataTable } from "@/components/DataTable";
+import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import { useAlert } from "@/components/ui/alerts/Alert";
@@ -25,14 +25,12 @@ const DoctorPatientsContent = () => {
   const { showSuccess, showError } = useAlert();
   const [patientToDelete, setPatientToDelete] = useState<Patient | null>(null);
 
-  const {
-    data,
-    isFetching,
-    isError,
-    error,
-  } = useGetDoctorPatientsQuery(doctorId, {
-    skip: !doctorId,
-  });
+  const { data, isFetching, isError, error } = useGetDoctorPatientsQuery(
+    doctorId,
+    {
+      skip: !doctorId,
+    },
+  );
 
   const [deletePatientFromDoctor, { isLoading: isDeleting }] =
     useDeletePatientFromDoctorMutation();
@@ -45,7 +43,7 @@ const DoctorPatientsContent = () => {
         onDelete: setPatientToDelete,
         isDeleting,
       }),
-    [isDeleting]
+    [isDeleting],
   );
 
   const handleConfirmDelete = async () => {
@@ -57,9 +55,7 @@ const DoctorPatientsContent = () => {
         patientId: patientToDelete._id,
       }).unwrap();
 
-      showSuccess(
-        result.message ?? "Patient deleted successfully."
-      );
+      showSuccess(result.message ?? "Patient deleted successfully.");
       setPatientToDelete(null);
     } catch (err) {
       showError(getApiErrorMessage(err, "Failed to delete patient"));
