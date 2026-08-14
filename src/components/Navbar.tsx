@@ -19,8 +19,7 @@ import { signOut, useSession } from "next-auth/react";
 const Navbar = () => {
   const { setTheme } = useTheme();
   const { data: session } = useSession();
-  const initials =
-    session?.user?.email?.slice(0, 2).toUpperCase() ?? "AD";
+  const initials = session?.user?.email?.slice(0, 2).toUpperCase() ?? "AD";
 
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
@@ -65,7 +64,12 @@ const Navbar = () => {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               variant="destructive"
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              //  onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() =>
+                signOut({
+                  callbackUrl: `${window.location.origin}/login`,
+                })
+              }
             >
               <LogOut className="h-[1.2rem] w-[1.2rem] mr-2" />
               Logout
