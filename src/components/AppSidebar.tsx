@@ -131,7 +131,11 @@ const AppSidebar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
-                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  onClick={() =>
+                    signOut({
+                      callbackUrl: `${window.location.origin}/login`,
+                    })
+                  }
                 >
                   Sign out
                 </DropdownMenuItem>
