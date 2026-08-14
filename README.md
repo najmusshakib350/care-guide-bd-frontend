@@ -130,15 +130,13 @@ Instant UI Re-render
 
 ## 📸 Visual Evidence (UI Screenshots)
 
-Place high-quality screenshots inside `public/screenshots/` to display your app UI:
-
-| Overview              | Feature                        | Screenshot                                              |
-| :-------------------- | :----------------------------- | :------------------------------------------------------ |
-| Dashboard             | Analytics Charts & Quick Stats | `![Dashboard](./public/screenshots/dashboard.png)`      |
-| Doctor Management     | Live Data Table & Search       | `![Doctors Page](./public/screenshots/doctors.png)`     |
-| Doctor's Patients     | Assigned Patients & Actions    | `![Doctor Patients](./public/screenshots/patients.png)` |
-| Mobile Responsiveness | Drawer & Mobile Navigation     | `![Mobile View](./public/screenshots/mobile.png)`       |
-| Authentication        | Login & Registration UI        | `![Login Page](./public/screenshots/login.png)`         |
+| Overview                  | Feature                        | Screenshot                                            |
+| :------------------------ | :----------------------------- | :---------------------------------------------------- |
+| **Dashboard**             | Analytics Charts & Quick Stats | ![Dashboard](./public/screenshots/dashboard.png)      |
+| **Doctor Management**     | Live Data Table & Search       | ![Doctors Page](./public/screenshots/doctors.png)     |
+| **Doctor's Patients**     | Assigned Patients & Actions    | ![Doctor Patients](./public/screenshots/patients.png) |
+| **Mobile Responsiveness** | Drawer & Mobile Navigation     | ![Mobile View](./public/screenshots/mobile.png)       |
+| **Authentication**        | Login & Registration UI        | ![Login Page](./public/screenshots/login.png)         |
 
 ---
 
